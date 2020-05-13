@@ -16,7 +16,7 @@ function App() {
       try {
         setOutput( window.Babel.transform(source.current.value, {presets: ["es2015", "react"]}).code );
         save(source.current.value);
-        errorMessage("");
+        setError("");
       } catch(e) {
 
         setError(e.message);
