@@ -28,16 +28,49 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <div id="container">
+      <div id="root">
+      </div>
+    </div>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <link rel="stylesheet" href="codemirror.css" />
+    <script src="codemirror.js"></script>
+
+    <script src="//cdn.jsdelivr.net/behave.js/0.1/behave.js"></script>
+    <script>
+
+     /* BehaveHooks.add(['keydown'], function(data){
+			  var numLines = data.lines.total,
+				house = document.getElementsByClassName('line-nums')[0],
+				html = '',
+				i;
+			  for(i=0; i<numLines; i++){
+				html += '<div>'+(i+1)+'</div>';
+			  }
+			  house.innerHTML = html;
+		    });
+      */
+     window.addEventListener('DOMContentLoaded',function () {
+       var editor = new Behave({
+         textarea:document.querySelector('textarea'),
+         replaceTab:     true,
+         softTabs:       true,
+         tabSize:        3,
+         autoOpen:       true,
+         overwrite:      true,
+         autoStrip:      true,
+         autoIndent:     true,
+         fence:          "----"
+       });
+
+       /* var editor = CodeMirror.fromTextArea(document.querySelector('textarea')[0], {
+        *   lineNumbers: true
+        * });
+        */
+     });
+    </script>
+
   </body>
 </html>

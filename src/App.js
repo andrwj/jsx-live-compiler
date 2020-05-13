@@ -1,24 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState, useRef, useCallback} from 'react';
 import './App.css';
 
+const save = (src) => localStorage.setItem("live-source", src);
+const read = () => localStorage.getItem("live-source");
+
 function App() {
+
+  const source = useRef(null);
+  const [output, setOutput] = useState("");
+  const [errorMessage, setError] = useState("");
+
+  const refresh = useCallback((e) => {
+    if(e.which === 13 && e.ctrlKey) {
+      console.log(source.current.value);
+      try {
+        setOutput( window.Babel.transform(source.current.value, {presets: ["es2015", "react"]}).code );
+        save(source.current.value);
+        errorMessage("");
+      } catch(e) {
+
+        setError(e.message);
+      }
+    } else {
+      if(errorMessage) setError("");
+    }
+  }, [errorMessage]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <header className={errorMessage ? "error" : ""}>{errorMessage}</header>
+      <div className="container">
+        <textarea ref={source} defaultValue={read()} onKeyDown={refresh} />
+        <pre>{output}</pre>
+      </div>
     </div>
   );
 }
