@@ -18,13 +18,12 @@ function App() {
         save(source.current.value);
         setError("");
       } catch(e) {
-
         setError(e.message);
       }
     } else {
       if(errorMessage) setError("");
     }
-  }, [errorMessage]);
+  });
 
   return (
     <div>
